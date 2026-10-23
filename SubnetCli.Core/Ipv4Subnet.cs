@@ -35,7 +35,7 @@ public sealed class Ipv4Subnet
         ArgumentException.ThrowIfNullOrWhiteSpace(cidr);
 
         string[] parts = cidr.Split('/', StringSplitOptions.TrimEntries);
-        if (parts.Length != 2 || !int.TryParse(parts[1], out int prefix))
+        if (parts.Length != 2 || parts[1].Contains('\0') || !int.TryParse(parts[1], out int prefix))
         {
             throw new ArgumentException("Expected IPv4 CIDR, for example 172.16.0.0/22.");
         }

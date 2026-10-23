@@ -292,4 +292,15 @@ public sealed class SubnetPlannerTests
         }
     }
 
+    [Theory]
+    [InlineData(2147483646, 1)]
+    [InlineData(int.MaxValue, 0)]
+    public void PrefixForHostsHandlesIntegerLimits(
+        int hosts,
+        int expectedPrefix)
+    {
+        int prefix = SubnetPlanner.PrefixForHosts(hosts);
+
+        Assert.Equal(expectedPrefix, prefix);
+    }
 }
