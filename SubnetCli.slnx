@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="SubnetCli.Core/SubnetCli.Core.csproj" />
+  <Project Path="SubnetCli.Tests/SubnetCli.Tests.csproj" />
+  <Project Path="SubnetCli/SubnetCli.csproj" />
+  <Project Path="SubnetCli.SmokeTests/SubnetCli.SmokeTests.csproj" />
+</Solution>

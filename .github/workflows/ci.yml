@@ -1,0 +1,54 @@
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint and Format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore SubnetCli.slnx
+
+      - name: Lint - .NET analyzers
+        run: dotnet build SubnetCli.slnx -c Release --no-restore -warnaserror
+
+      - name: Check formatting
+        run: dotnet format SubnetCli.slnx --verify-no-changes --no-restore --severity info
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore SubnetCli.slnx
+
+      - name: Run unit tests
+        run: dotnet test SubnetCli.Tests/SubnetCli.Tests.csproj -c Release --no-restore
