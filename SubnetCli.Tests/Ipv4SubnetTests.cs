@@ -116,4 +116,30 @@ public sealed class Ipv4SubnetTests
         Assert.Throws<ArgumentException>(
             () => Ipv4Subnet.Parse("1.2.3.4\0/24"));
     }
+
+    [Theory]
+    [InlineData("1.2.3.4/24\0")]
+    [InlineData("1.2.3.4/0\0")]
+    [InlineData("1.2.3.4/32\0")]
+    public void ParseRejectsNullCharactersInPrefix(string cidr)
+    {
+        Assert.Throws<ArgumentException>(
+            () => Ipv4Subnet.Parse(cidr));
+    }
+
+    [Fact]
+
+    public void FromAddressRejectsOutOfRangeAddress()
+    {
+        Assert.Throws<ArgumentException>(
+            () => Ipv4Subnet.FromAddress(uint.MaxValue + 1UL, 24));
+    }
+
+    [Fact]
+    public void FromAddressAcceptsMaximumIpv4Address()
+    {
+        Ipv4Subnet subnet = Ipv4Subnet.FromAddress(uint.MaxValue, 32);
+
+        Assert.Equal("255.255.255.255/32", subnet.ToString());
+    }
 }
