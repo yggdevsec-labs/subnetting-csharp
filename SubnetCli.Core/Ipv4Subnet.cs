@@ -68,10 +68,9 @@ public sealed class Ipv4Subnet
 
         foreach (string octet in octets)
         {
-            if (octet.Length is < 1 or > 3 ||
-                (octet.Length > 1 && octet[0] == '0') ||
-                !byte.TryParse(octet, NumberStyles.None,
-                    CultureInfo.InvariantCulture, out byte value))
+            if (octet.Length is < 1 or > 3 || (octet.Length > 1 && octet[0] == '0') ||
+                octet.Any(static c => c is < '0' or > '9') ||
+                !byte.TryParse(octet, NumberStyles.None, CultureInfo.InvariantCulture, out byte value))
             {
                 throw new ArgumentException($"Invalid IPv4 address: {text}");
             }
@@ -84,7 +83,6 @@ public sealed class Ipv4Subnet
 
     public static string FormatAddress(ulong address)
     {
-
         ArgumentOutOfRangeException.ThrowIfGreaterThan(address, MaxIpv4);
 
         byte[] bytes = new byte[4];
