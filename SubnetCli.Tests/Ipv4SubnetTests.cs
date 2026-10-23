@@ -99,4 +99,21 @@ public sealed class Ipv4SubnetTests
 
         Assert.Equal(1, exitCode);
     }
+
+    [Theory]
+    [InlineData("1.2.3.4\0")]
+    [InlineData("1\0.2.3.4")]
+    [InlineData("1.2.3.12\0")]
+    public void ParseAddressRejectsNullCharacters(string address)
+    {
+        Assert.Throws<ArgumentException>(
+            () => Ipv4Subnet.ParseAddress(address));
+    }
+
+    [Fact]
+    public void ParseRejectsNullCharactersInCidr()
+    {
+        Assert.Throws<ArgumentException>(
+            () => Ipv4Subnet.Parse("1.2.3.4\0/24"));
+    }
 }
