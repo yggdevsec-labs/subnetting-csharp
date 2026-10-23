@@ -1,5 +1,12 @@
+# Build artifacts
 **/bin/
 **/obj/
+
+# Visual Studio
 .vs/
 *.user
 *.suo
+
+# Test results and coverage
+**/TestResults/
+coverage-report/
