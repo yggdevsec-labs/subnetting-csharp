@@ -38,11 +38,11 @@ subnetting-csharp/
 │   └── SubnetCli.Core.csproj
 │
 ├── SubnetCli.Tests/
-│   ├── unit/
-│   │   ├── Ipv4SubnetTests.cs
-│   │   ├── SubnetPlannerTests.cs
-│   │   └── CliApplicationTests.cs
+│   
 │   └── SubnetCli.Tests.csproj
+│   ├── Ipv4SubnetTests.cs
+│   ├── SubnetPlannerTests.cs
+│   └── CliApplicationTests.cs
 │
 ├── SubnetCli.SmokeTests/
 │   ├── Program.cs
@@ -250,4 +250,4 @@ dotnet publish SubnetCli/SubnetCli.csproj -c Release -r win-x64 --self-contained
 
 Subnet CLI is intended for IPv4 subnet calculation, network planning, and educational use.
 
-The application performs local calculations and does not actively scan networks or contact remote hosts.dotnet run --project SubnetCli -- info 192.168.1.0/24
+The application performs local calculations and does not actively scan networks or contact remote hosts.
